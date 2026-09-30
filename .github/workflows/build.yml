@@ -1,5 +1,9 @@
 name: Build
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     branches:
@@ -19,5 +23,22 @@ jobs:
           distribution: corretto
           java-version: "21"
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::817009059025:role/GitHubActionsGemalDev
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Build application and Docker image
         run: ./scripts/build.sh
+
+      - name: Push Docker image to ECR
+        run: |
+          docker tag gemal-dev:latest 817009059025.dkr.ecr.us-east-1.amazonaws.com/gemal-dev:latest
+          docker tag gemal-dev:latest 817009059025.dkr.ecr.us-east-1.amazonaws.com/gemal-dev:${{ github.sha }}
+
+          docker push 817009059025.dkr.ecr.us-east-1.amazonaws.com/gemal-dev:latest
+          docker push 817009059025.dkr.ecr.us-east-1.amazonaws.com/gemal-dev:${{ github.sha }}
