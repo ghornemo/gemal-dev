@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gemal Horne — Cloud, DevOps & Software Engineering</title>
+  <meta name="description" content="Gemal Horne — cloud, DevOps and software engineering. Live Java application running on AWS.">
+  <style>
+    :root{
+      --bg:#04111d; --panel:#081a29e8; --line:#173a55; --text:#f7fbff; --muted:#aebfd0;
+      --blue:#2d8cff; --cyan:#2dc6ff; --orange:#ff9b2f; --purple:#9b6cff; --green:#27e56b;
+      --shadow:0 18px 50px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:
+      radial-gradient(circle at 80% 0%,rgba(91,64,160,.22),transparent 34%),
+      radial-gradient(circle at 10% 20%,rgba(0,137,255,.13),transparent 32%),
+      linear-gradient(180deg,#061522 0%,#020b12 100%);
+      color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1460px,calc(100% - 48px));margin:auto}
+    header{position:sticky;top:0;z-index:20;background:rgba(3,13,22,.76);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+    nav{height:76px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-size:31px;font-weight:900;letter-spacing:-1.5px}.brand span{color:var(--blue)}
+    .navlinks{display:flex;gap:28px;color:#c9d6e3;font-weight:650}.navlinks a:hover{color:white}
+    .hero{min-height:440px;display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center;padding:70px 0 54px;position:relative}
+    .eyebrow{letter-spacing:.32em;font-size:12px;color:#c4d4e4;font-weight:800}
+    h1{font-size:clamp(52px,6vw,88px);line-height:.95;margin:16px 0 12px;letter-spacing:-4px}
+    h1 span{color:var(--blue)}
+    .role{font-size:26px;font-weight:750;color:#d9e4ee;margin-bottom:12px}
+    .intro{max-width:720px;color:var(--muted);font-size:18px}
+    .actions{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap}
+    .btn{padding:13px 19px;border-radius:10px;border:1px solid #31536f;font-weight:800;transition:.2s transform,.2s border-color,.2s background}
+    .btn:hover{transform:translateY(-2px);border-color:#5ba9e8}.btn.primary{background:var(--blue);border-color:var(--blue)}
+    .status{justify-self:end;width:min(360px,100%);padding:22px;border:1px solid #2c4c62;border-radius:18px;background:linear-gradient(145deg,rgba(19,34,48,.96),rgba(19,24,38,.9));box-shadow:var(--shadow)}
+    .status-row{display:flex;gap:13px;align-items:center}.dot{width:16px;height:16px;border-radius:50%;background:var(--green);box-shadow:0 0 18px rgba(39,229,107,.7)}
+    .status strong{font-size:20px}.status small{display:block;color:var(--muted);margin:8px 0 0 29px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:18px}
+    .card{position:relative;overflow:hidden;padding:24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(8,29,46,.95),rgba(5,20,32,.94));box-shadow:var(--shadow);transition:.25s transform,.25s border-color,.25s box-shadow}
+    .card:hover{transform:translateY(-5px);border-color:#2e709d;box-shadow:0 24px 60px rgba(0,0,0,.38)}
+    .card.aws{border-color:#68481f;background:linear-gradient(145deg,rgba(39,28,15,.92),rgba(12,22,29,.96))}
+    .card.cicd{border-color:#493582;background:linear-gradient(145deg,rgba(27,22,61,.94),rgba(7,22,36,.96))}
+    .cardhead{display:flex;align-items:center;gap:14px;margin-bottom:22px}.cardhead img{width:52px;height:52px}.cardhead h2{font-size:22px;margin:0}.cardhead p{margin:2px 0 0;color:var(--muted)}
+    .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.aws .tiles{grid-template-columns:repeat(2,1fr)}
+    .tile{padding:17px 8px;text-align:center;border:1px solid rgba(255,255,255,.035);border-radius:12px;background:rgba(255,255,255,.035)}
+    .tile .ico{font-size:29px;margin-bottom:7px}.tile b{display:block}.tile small{color:var(--muted)}
+    .checks{border-top:1px solid #244154;margin-top:20px;padding-top:16px;display:grid;gap:9px;color:#c8d6e3}
+    .check:before{content:"✓";display:inline-grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#27b6f3;color:#02101a;font-weight:900;margin-right:10px}
+    .aws .check:before{background:var(--orange)}.cicd .check:before{background:var(--purple)}
+    .pipeline{display:flex;align-items:stretch;gap:7px}.step{flex:1;padding:14px 7px;text-align:center;border-radius:10px;background:rgba(255,255,255,.045);font-size:13px}.step b{display:block;margin-top:6px}.arrow{align-self:center;color:#8aa3b8}
+    .about{margin:0 0 55px;display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
+    .aboutcopy{display:flex;gap:15px}.aboutcopy img{width:48px;height:48px}.about h2{margin:0 0 7px}.about p{color:var(--muted);margin:0}
+    .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.skill{padding:14px;border-left:1px solid #274259}.skill b{display:block}.skill span{color:var(--muted);font-size:14px}
+    footer{border-top:1px solid rgba(255,255,255,.08);padding:24px 0 38px;color:#7f95a8;font-size:14px}
+    @media(max-width:1050px){.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.status{justify-self:start}.card{max-width:none}}
+    @media(max-width:700px){.wrap{width:min(100% - 28px,1460px)}.navlinks{display:none}.hero{padding-top:48px}.tiles{grid-template-columns:repeat(2,1fr)}.pipeline{display:grid;grid-template-columns:1fr 1fr}.arrow{display:none}.about{grid-template-columns:1fr}.skills{grid-template-columns:1fr}h1{letter-spacing:-2px}}
+  </style>
+</head>
+<body>
+<header>
+  <nav class="wrap">
+    <a class="brand" href="/">gemal<span>.dev</span></a>
+    <div class="navlinks">
+      <a href="#architecture">Architecture</a><a href="#aws">AWS</a><a href="#cicd">CI/CD</a><a href="#about">About</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">CLOUD • DEVOPS • SOFTWARE ENGINEERING</div>
+      <h1>Gemal <span>Horne</span></h1>
+      <div class="role">Developer. Cloud & DevOps Engineer.</div>
+      <p class="intro">Building real-world cloud infrastructure and modern applications. This site is itself a live deployment: a containerized Java application running on AWS with automated CI.</p>
+      <div class="actions">
+          <a class="btn primary"
+            href="https://github.com/ghornemo/gemal-dev"
+            target="_blank"
+            rel="noreferrer">
+              GitHub ↗
+          </a>
+
+          <a class="btn"
+            href="https://www.linkedin.com/in/gemal-horne"
+            target="_blank"
+            rel="noreferrer">
+              LinkedIn ↗
+          </a>
+
+          <a class="btn"
+            href="/Gemal_Horne_DevOps_Engineer_Resume.pdf"
+            target="_blank">
+              Resume ↓
+          </a>
+      </div>
+    </div>
+    <aside class="status">
+      <div class="status-row"><span class="dot"></span><strong>Live in Production</strong></div>
+      <small>gemal.dev · AWS us-east-1 · HTTPS</small>
+    </aside>
+  </section>
+
+  <section class="grid">
+    <article class="card" id="architecture">
+      <div class="cardhead"><img src="/assets/code.svg" alt=""><div><h2>Application Architecture</h2><p>Modern Java web application stack</p></div></div>
+      <div class="tiles">
+        <div class="tile"><div class="ico">☕</div><b>Java</b><small>21</small></div>
+        <div class="tile"><div class="ico">◉</div><b>Spring Boot</b><small>Web framework</small></div>
+        <div class="tile"><div class="ico">◆</div><b>Thymeleaf</b><small>HTML templates</small></div>
+        <div class="tile"><div class="ico">🐱</div><b>Tomcat</b><small>Embedded server</small></div>
+      </div>
+      <div class="checks">
+        <div class="check">Spring MVC and server-rendered HTML</div>
+        <div class="check">Maven-built executable JAR</div>
+        <div class="check">Containerized with Docker</div>
+      </div>
+    </article>
+
+    <article class="card aws" id="aws">
+      <div class="cardhead"><img src="/assets/cloud.svg" alt=""><div><h2>AWS Infrastructure</h2><p>Simple, secure, cost-conscious hosting</p></div></div>
+      <div class="tiles">
+        <div class="tile"><div class="ico">▦</div><b>EC2</b><small>Amazon Linux 2023</small></div>
+        <div class="tile"><div class="ico">⬡</div><b>ECR</b><small>Private container registry</small></div>
+        <div class="tile"><div class="ico">53</div><b>Route 53</b><small>DNS · gemal.dev</small></div>
+        <div class="tile"><img src="/assets/lock.svg" width="34" height="34" alt=""><b>Caddy</b><small>Reverse proxy · TLS</small></div>
+      </div>
+      <div class="checks">
+        <div class="check">Elastic IP and Route 53 DNS</div>
+        <div class="check">Automatic HTTPS certificate management</div>
+        <div class="check">Private app port behind reverse proxy</div>
+      </div>
+    </article>
+
+    <article class="card cicd" id="cicd">
+      <div class="cardhead"><img src="/assets/pipeline.svg" alt=""><div><h2>CI/CD Pipeline</h2><p>Build, test and publish workflow</p></div></div>
+      <div class="pipeline">
+        <div class="step"><div>⑂</div><b>Git</b><span>Push</span></div><span class="arrow">→</span>
+        <div class="step"><div>◉</div><b>Actions</b><span>Build</span></div><span class="arrow">→</span>
+        <div class="step"><div>🐳</div><b>Docker</b><span>Image</span></div><span class="arrow">→</span>
+        <div class="step"><div>⬡</div><b>ECR</b><span>Publish</span></div>
+      </div>
+      <div class="checks">
+        <div class="check">Automatic build on push to main</div>
+        <div class="check">Maven build and tests</div>
+        <div class="check">GitHub → AWS auth with OIDC</div>
+      </div>
+    </article>
+  </section>
+
+  <section class="card about" id="about">
+    <div class="aboutcopy">
+      <img src="/assets/user.svg" alt="">
+      <div>
+        <h2>About Me</h2>
+        <p>I’m Gemal Horne, a software and cloud engineer in New Brunswick, Canada. My background spans DevOps, Java development and cloud infrastructure, with a strong interest in building practical systems and automating the path from source code to production.</p>
+      </div>
+    </div>
+    <div class="skills">
+      <div class="skill"><b>Cloud & DevOps</b><span>AWS · Docker · CI/CD · Linux</span></div>
+      <div class="skill"><b>Software</b><span>Java · Spring Boot · REST · Maven</span></div>
+      <div class="skill"><b>Infrastructure</b><span>IAM · EC2 · ECR · Route 53</span></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Gemal Horne · gemal.dev</div></footer>
+</body>
+</html>
