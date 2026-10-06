@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gemal Horne — Cloud, DevOps & Software Engineering</title>
-  <meta name="description" content="Gemal Horne — cloud, DevOps and software engineering. Live Java application running on AWS.">
+  <meta name="description" content="Gemal Horne — cloud, DevOps and software engineering. Java applications and PostgreSQL running on Kubernetes on AWS, with Grafana monitoring.">
   <style>
     :root{
       --bg:#04111d; --panel:#081a29e8; --line:#173a55; --text:#f7fbff; --muted:#aebfd0;
@@ -19,11 +19,13 @@
       linear-gradient(180deg,#061522 0%,#020b12 100%);
       color:var(--text);font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     a{color:inherit;text-decoration:none}
+    a:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+    a[aria-disabled="true"]{opacity:.65;cursor:default}
     .wrap{width:min(1460px,calc(100% - 48px));margin:auto}
     header{position:sticky;top:0;z-index:20;background:rgba(3,13,22,.76);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
     nav{height:76px;display:flex;align-items:center;justify-content:space-between}
     .brand{font-size:31px;font-weight:900;letter-spacing:-1.5px}.brand span{color:var(--blue)}
-    .navlinks{display:flex;gap:28px;color:#c9d6e3;font-weight:650}.navlinks a:hover{color:white}
+    .navlinks{display:flex;gap:18px;color:#c9d6e3;font-weight:650}.navlinks a:hover{color:white}
     .hero{min-height:440px;display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center;padding:70px 0 54px;position:relative}
     .eyebrow{letter-spacing:.32em;font-size:12px;color:#c4d4e4;font-weight:800}
     h1{font-size:clamp(52px,6vw,88px);line-height:.95;margin:16px 0 12px;letter-spacing:-4px}
@@ -62,7 +64,7 @@
   <nav class="wrap">
     <a class="brand" href="/">gemal<span>.dev</span></a>
     <div class="navlinks">
-      <a href="#architecture">Architecture</a><a href="#aws">AWS</a><a href="#cicd">CI/CD</a><a href="#about">About</a>
+      <a href="#architecture">Architecture</a><a href="#aws">AWS</a><a href="#cicd">CI</a><a href="#kubernetes">Kubernetes</a><a href="#monitoring">Monitoring</a><a href="#about">About</a><a href="#contact">Contact</a>
     </div>
   </nav>
 </header>
@@ -73,8 +75,10 @@
       <div class="eyebrow">CLOUD • DEVOPS • SOFTWARE ENGINEERING</div>
       <h1>Gemal <span>Horne</span></h1>
       <div class="role">Developer. Cloud & DevOps Engineer.</div>
-      <p class="intro">Building real-world cloud infrastructure and modern applications. This site is itself a live deployment: a containerized Java application running on AWS with automated CI.</p>
+      <p class="intro">Building real-world cloud infrastructure and modern applications. This site is part of my hands-on cloud project: containerized Java applications and PostgreSQL running on Kubernetes on AWS, with automated builds and Grafana dashboards.</p>
       <div class="actions">
+          <a class="btn" href="https://world.gemal.dev" target="_blank" rel="noopener noreferrer">World App ↗</a>
+          <a class="btn" href="https://friendlyradish1482.grafana.net/public-dashboards/59a6140b841545e9b78fb335041b9696" target="_blank" rel="noopener noreferrer">Grafana Dashboard ↗</a>
           <a class="btn primary"
             href="https://github.com/ghornemo/gemal-dev"
             target="_blank"
@@ -97,29 +101,29 @@
       </div>
     </div>
     <aside class="status">
-      <div class="status-row"><span class="dot"></span><strong>Live in Production</strong></div>
-      <small>gemal.dev · AWS us-east-1 · HTTPS</small>
+      <div class="status-row"><span class="dot"></span><strong>Live Cloud Project</strong></div>
+      <small>gemal.dev · AWS us-east-1 · Kubernetes · HTTPS</small>
     </aside>
   </section>
 
   <section class="grid">
     <article class="card" id="architecture">
-      <div class="cardhead"><img src="/assets/code.svg" alt=""><div><h2>Application Architecture</h2><p>Modern Java web application stack</p></div></div>
+      <div class="cardhead"><img src="/assets/code.svg" alt=""><div><h2>Application Architecture</h2><p>Java applications backed by PostgreSQL</p></div></div>
       <div class="tiles">
         <div class="tile"><div class="ico">☕</div><b>Java</b><small>21</small></div>
         <div class="tile"><div class="ico">◉</div><b>Spring Boot</b><small>Web framework</small></div>
         <div class="tile"><div class="ico">◆</div><b>Thymeleaf</b><small>HTML templates</small></div>
-        <div class="tile"><div class="ico">🐱</div><b>Tomcat</b><small>Embedded server</small></div>
+        <div class="tile"><div class="ico">🐱</div><b>PostgreSQL</b><small>Application database</small></div>
       </div>
       <div class="checks">
         <div class="check">Spring MVC and server-rendered HTML</div>
         <div class="check">Maven-built executable JAR</div>
-        <div class="check">Containerized with Docker</div>
+        <div class="check">Docker images deployed with Kubernetes</div>
       </div>
     </article>
 
     <article class="card aws" id="aws">
-      <div class="cardhead"><img src="/assets/cloud.svg" alt=""><div><h2>AWS Infrastructure</h2><p>Simple, secure, cost-conscious hosting</p></div></div>
+      <div class="cardhead"><img src="/assets/cloud.svg" alt=""><div><h2>AWS Infrastructure</h2><p>AWS foundation for a Kubernetes deployment</p></div></div>
       <div class="tiles">
         <div class="tile"><div class="ico">▦</div><b>EC2</b><small>Amazon Linux 2023</small></div>
         <div class="tile"><div class="ico">⬡</div><b>ECR</b><small>Private container registry</small></div>
@@ -134,7 +138,7 @@
     </article>
 
     <article class="card cicd" id="cicd">
-      <div class="cardhead"><img src="/assets/pipeline.svg" alt=""><div><h2>CI/CD Pipeline</h2><p>Build, test and publish workflow</p></div></div>
+      <div class="cardhead"><img src="/assets/pipeline.svg" alt=""><div><h2>Continuous Integration</h2><p>Automated builds and container publishing</p></div></div>
       <div class="pipeline">
         <div class="step"><div>⑂</div><b>Git</b><span>Push</span></div><span class="arrow">→</span>
         <div class="step"><div>◉</div><b>Actions</b><span>Build</span></div><span class="arrow">→</span>
@@ -145,10 +149,35 @@
         <div class="check">Automatic build on push to main</div>
         <div class="check">Maven build and tests</div>
         <div class="check">GitHub → AWS auth with OIDC</div>
+        <div class="check">Kubernetes deployments managed separately</div>
       </div>
     </article>
   </section>
 
+  <section class="grid" aria-label="Kubernetes and monitoring">
+    <article class="card" id="kubernetes">
+      <div class="cardhead"><div><h2>Kubernetes Runtime</h2><p>Applications managed through YAML manifests</p></div></div>
+      <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
+        <div class="tile"><div class="ico">☸</div><b>Deployments</b><small>Application pods</small></div>
+        <div class="tile"><div class="ico">⇄</div><b>Services</b><small>Internal networking</small></div>
+      </div>
+      <div class="checks">
+        <div class="check">Java applications and PostgreSQL workloads</div>
+        <div class="check">Declarative deployment and service configuration</div>
+        <div class="check">Kubernetes manages application pod lifecycle</div>
+      </div>
+    </article>
+    <article class="card" id="projects">
+      <div class="cardhead"><div><h2>Live Applications</h2><p>Explore the project beyond this portfolio</p></div></div>
+      <p style="color:var(--muted)">This portfolio and the World application demonstrate hands-on work across Java development, container builds, database integration and Kubernetes deployment.</p>
+      <div class="actions"><a class="btn primary" href="https://world.gemal.dev" target="_blank" rel="noopener noreferrer">Open world.gemal.dev ↗</a></div>
+    </article>
+    <article class="card cicd" id="monitoring">
+      <div class="cardhead"><div><h2>Grafana Monitoring</h2><p>Visibility into the infrastructure</p></div></div>
+      <p style="color:var(--muted)">Grafana dashboards provide a view of Kubernetes and host metrics, helping me understand resource usage and investigate the running environment.</p>
+      <div class="actions"><a class="btn" href="https://friendlyradish1482.grafana.net/public-dashboards/59a6140b841545e9b78fb335041b9696" target="_blank" rel="noopener noreferrer">Open Grafana Dashboard ↗</a></div>
+    </article>
+  </section>
   <section class="card about" id="about">
     <div class="aboutcopy">
       <img src="/assets/user.svg" alt="">
@@ -158,11 +187,32 @@
       </div>
     </div>
     <div class="skills">
-      <div class="skill"><b>Cloud & DevOps</b><span>AWS · Docker · CI/CD · Linux</span></div>
-      <div class="skill"><b>Software</b><span>Java · Spring Boot · REST · Maven</span></div>
-      <div class="skill"><b>Infrastructure</b><span>IAM · EC2 · ECR · Route 53</span></div>
+      <div class="skill"><b>Cloud & DevOps</b><span>AWS · Kubernetes · Docker · Linux</span></div>
+      <div class="skill"><b>Software</b><span>Java · Spring Boot · PostgreSQL · Maven</span></div>
+      <div class="skill"><b>Infrastructure</b><span>EC2 · ECR · Route 53 · Grafana</span></div>
     </div>
   </section>
+  <section class="card" id="contact" style="margin-bottom:55px">
+  <h2 style="margin:0 0 10px">Get in Touch</h2>
+  <p style="color:var(--muted);margin:0">
+    Based in Saint John, New Brunswick. Open to software engineering,
+    cloud and DevOps opportunities.
+  </p>
+  <p>
+    <a href="mailto:gemal.horne@gmail.com">gemal.horne@gmail.com</a>
+  </p>
+  <div class="actions">
+    <a class="btn primary" href="mailto:gemal.horne@gmail.com">
+      Email Me ↗
+    </a>
+    <a class="btn"
+       href="https://www.linkedin.com/in/gemal-horne"
+       target="_blank"
+       rel="noopener noreferrer">
+      Connect on LinkedIn ↗
+    </a>
+  </div>
+</section>
 </main>
 
 <footer><div class="wrap">© 2026 Gemal Horne · gemal.dev</div></footer>
